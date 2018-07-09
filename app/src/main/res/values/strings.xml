@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Qrpayment</string>
+    <string name="name_accpt">ชื่อผู้รับ</string>
+    <string name="amount_accpt">จำนวนเงิน</string>
 </resources>
