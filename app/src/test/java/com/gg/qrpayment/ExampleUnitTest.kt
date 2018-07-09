@@ -1,4 +1,4 @@
-package com.eggdigital.qrpayment
+package com.gg.qrpayment
 
 import org.junit.Test
 

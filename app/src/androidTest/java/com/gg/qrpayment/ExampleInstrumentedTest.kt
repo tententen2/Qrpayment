@@ -1,4 +1,4 @@
-package com.eggdigital.qrpayment
+package com.gg.qrpayment
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

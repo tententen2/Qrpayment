@@ -1,4 +1,4 @@
-package com.eggdigital.qrpayment
+package com.gg.qrpayment
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

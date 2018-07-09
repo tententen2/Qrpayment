@@ -7,6 +7,9 @@ buildscript {
         jcenter()
     }
     dependencies {
+        apply from: 'dependencies-versions.gradle'
+        apply from: 'dependencies-all.gradle'
+
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
@@ -19,7 +22,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
     }
+    dependencies { apply from: "$rootProject.rootDir/dependencies-group.gradle" }
 }
 
 task clean(type: Delete) {
