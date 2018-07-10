@@ -1,15 +1,10 @@
 package com.gg.qrpayment.main.view
 
-import android.graphics.Color
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
-import android.util.Log
 import com.gg.qrpayment.R
 import com.gg.qrpayment.base.BaseFragment
-import com.gg.qrpayment.extension.random
 import com.gg.qrpayment.one.view.OneFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
