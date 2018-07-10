@@ -10,15 +10,11 @@ class OneViewmodel:ViewModel() {
     private var data:MutableLiveData<ArrayList<Account>> = MutableLiveData()
 
     fun addData(name:String,amount:Double){
-        var account = Account(name,amount)
         var array = data.value ?: arrayListOf()
+        var account = Account(array.size+1,name,amount)
         array?.add(account)
         data.value = array
     }
 
-    fun setData(list:MutableLiveData<ArrayList<Account>>){
-        data = list
-    }
-
-    fun getData():MutableLiveData<ArrayList<Account>> = data
+    fun getData():LiveData<ArrayList<Account>> = data
 }

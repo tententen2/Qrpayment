@@ -1,28 +1,30 @@
 package com.gg.qrpayment.one.recycler
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import android.support.v7.recyclerview.extensions.ListAdapter
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.gg.qrpayment.model.Account
 
-class OneRecycler:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    lateinit var list:MutableLiveData<ArrayList<Account>>
+class OneRecycler:ListAdapter<Account,OneVHRecycler>(AccountDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OneVHRecycler {
         return OneVHRecycler.create(parent)
     }
 
-    override fun getItemCount(): Int = list.value?.size ?: 0
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: OneVHRecycler, position: Int) {
+        holder.bind()
     }
 
-    fun setData(data: MutableLiveData<ArrayList<Account>>) {
-        list = data
-        list.observeForever {
-            notifyDataSetChanged()
-        }
+}
+
+class AccountDiffCallback : DiffUtil.ItemCallback<Account>() {
+    override fun areItemsTheSame(oldItem: Account, newItem: Account): Boolean {
+        return  oldItem.id == newItem.id
     }
 
+    override fun areContentsTheSame(oldItem: Account, newItem: Account): Boolean {
+        return  oldItem == newItem
+    }
 }
