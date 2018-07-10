@@ -8,5 +8,5 @@ class OneFragment :BaseFragment() {
 
     }
 
-    override val layoutResourceId: Int = R.layout.fragment_one
+    override val layoutResourceId: Int = R.layout.vh_custominfo
 }
