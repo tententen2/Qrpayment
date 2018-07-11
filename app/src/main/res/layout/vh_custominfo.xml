@@ -25,6 +25,7 @@
                 android:drawableLeft="@drawable/ic_account_box"
                 android:drawablePadding="@dimen/dimen8dp"
                 style="@style/Base.Widget.AppCompat.EditText"
+                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/name_accpt" />
@@ -39,6 +40,7 @@
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_amount"
+                android:inputType="numberDecimal"
                 android:drawableLeft="@drawable/ic_local_atm"
                 android:drawablePadding="@dimen/dimen8dp"
                 style="@style/Base.Widget.AppCompat.EditText"
