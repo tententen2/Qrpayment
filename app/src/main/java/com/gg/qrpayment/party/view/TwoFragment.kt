@@ -34,6 +34,10 @@ class TwoFragment : BaseFragment() {
                 QRCodeGenerator(code, QRcodeSize, resources.getColor(R.color.secondaryTextColor), resources.getColor(R.color.primaryTextColor))
             }
             imageQr?.setImageBitmap(qrCodeGenerator.getBitmap())
+
+            val amountResult = String.format("฿ %.2f",perPerson)
+            amountResultTextView.text = amountResult
+
         }
     }
 

@@ -16,6 +16,14 @@
 
             />
 
+        <TextView
+            android:id="@+id/amountResultTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:gravity="center"/>
+
         <include
             android:id="@+id/vh_input"
             layout="@layout/vh_custominfo" />
