@@ -11,6 +11,7 @@ import com.gg.qrpayment.R
 import com.gg.qrpayment.base.BaseFragment
 import com.gg.qrpayment.extension.random
 import com.gg.qrpayment.one.view.OneFragment
+import com.gg.qrpayment.party.view.TwoFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment :BaseFragment() {
@@ -35,7 +36,7 @@ class MainFragment :BaseFragment() {
     private fun setupViewPager() {
         var adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFrag(OneFragment(),"ONE")
-        adapter.addFrag(OneFragment(),"TWO")
+        adapter.addFrag(TwoFragment(),"TWO")
 
         pager_main.adapter = adapter
 
