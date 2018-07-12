@@ -39,21 +39,14 @@ class TwoFragment : BaseFragment() {
         viewModel = ViewModelProviders.of(activity!!).get(TwoViewModel::class.java)
         viewModel.getState().observe(this, Observer {
             it?.let {
-                it.iterator().forEach {
-                    when (it.key) {
-                        StateValid.numberError -> vh_input.input_layout_name.error = "number พัง"
-                        StateValid.moneyError -> vh_input.input_layout_amount.error = "money พัง"
-                        StateValid.personError -> input_layout_sum.error = "person พัง"
-                        StateValid.numberSuccess -> {
-                            vh_input.input_layout_name.error = null
-                        }
-                        StateValid.moneySuccess -> {
-                            vh_input.input_layout_amount.error = null
-                        }
-                        StateValid.personSuccess -> {
-                            input_layout_sum.error = null
-                        }
-                    }
+                it.keys.apply {
+                    if(contains(StateValid.numberError)) vh_input.input_layout_name.error = "number พัง"
+                    if(contains(StateValid.moneyError)) vh_input.input_layout_amount.error = "money พัง"
+                    if(contains(StateValid.personError)) input_layout_sum.error = "person พัง"
+
+                    if(contains(StateValid.numberSuccess)) vh_input.input_layout_name.error = null
+                    if(contains(StateValid.moneySuccess)) vh_input.input_layout_amount.error = null
+                    if(contains(StateValid.personSuccess)) input_layout_sum.error = null
                 }
             }
         })
