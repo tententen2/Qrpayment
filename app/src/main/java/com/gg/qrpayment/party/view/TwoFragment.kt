@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.os.Build
+import android.support.design.widget.TextInputLayout
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.res.ResourcesCompat.getColor
 import android.util.Log
@@ -16,6 +17,7 @@ import com.gg.qrpayment.util.PromptPayCodeGenerator
 import com.gg.qrpayment.util.QRCodeGenerator
 import kotlinx.android.synthetic.main.fragment_two.*
 import kotlinx.android.synthetic.main.vh_custominfo.view.*
+import kotlinx.coroutines.experimental.selects.whileSelect
 
 class TwoFragment : BaseFragment() {
     var data = PartyShare()
@@ -40,13 +42,13 @@ class TwoFragment : BaseFragment() {
         viewModel.getState().observe(this, Observer {
             it?.let {
                 it.keys.apply {
-                    if(contains(StateValid.numberError)) vh_input.input_layout_name.error = "number พัง"
-                    if(contains(StateValid.moneyError)) vh_input.input_layout_amount.error = "money พัง"
-                    if(contains(StateValid.personError)) input_layout_sum.error = "person พัง"
+                    if(contains(StateValid.moneyError)) setError(vh_input.input_layout_amount,"money พัง")
+                    if(contains(StateValid.numberError)) setError(vh_input.input_layout_name,"number พัง")
+                    if(contains(StateValid.personError)) setError(input_layout_sum,"person พัง")
 
-                    if(contains(StateValid.numberSuccess)) vh_input.input_layout_name.error = null
-                    if(contains(StateValid.moneySuccess)) vh_input.input_layout_amount.error = null
-                    if(contains(StateValid.personSuccess)) input_layout_sum.error = null
+                    if(contains(StateValid.numberSuccess)) clearError(vh_input.input_layout_name)
+                    if(contains(StateValid.moneySuccess)) clearError(vh_input.input_layout_amount)
+                    if(contains(StateValid.personSuccess)) clearError(input_layout_sum)
                 }
             }
         })
@@ -60,6 +62,24 @@ class TwoFragment : BaseFragment() {
             generateQRcode(it)
         })
 
+    }
+
+    private fun setError(textView: TextInputLayout?, text: String) {
+        textView?.let {
+            it.apply {
+                isErrorEnabled = true
+                error = text
+            }
+        }
+    }
+
+    private fun clearError(textView: TextInputLayout?) {
+        textView?.let {
+            it.apply {
+                error = null
+                isErrorEnabled = false
+            }
+        }
     }
 
     private fun generateQRcode(it: String?) {
