@@ -11,28 +11,29 @@ class TwoViewModel: ViewModel() {
     private var stateValidInput = MutableLiveData<MutableMap<StateValid,String>>()
     private var codeGenerate = MutableLiveData<String>()
     private var pricePerPerson = MutableLiveData<Double>()
+    private var map:MutableMap<StateValid,String> = mutableMapOf()
 
     fun validInput(data:PartyShare){
-        stateValidInput.value = stateValidInput.value ?: mutableMapOf()
         if(!data.validAccountNumber()){
-            stateValidInput.value?.put(StateValid.numberError,"")
+            map[StateValid.numberError] = ""
         }
         else{
-            stateValidInput.value?.remove(StateValid.numberError)
-            stateValidInput.value?.put(StateValid.numberSuccess,"")
+            map.remove(StateValid.numberError)
+            map[StateValid.numberSuccess] = ""
         }
         if(!data.validMoneyNumber()){
-            stateValidInput.value?.put(StateValid.moneyError,"")
+            map[StateValid.moneyError] = ""
         }else{
-            stateValidInput.value?.remove(StateValid.moneyError)
-            stateValidInput.value?.put(StateValid.moneySuccess,"")
+            map.remove(StateValid.moneyError)
+            map[StateValid.moneySuccess] = ""
         }
         if(!data.validsumPerson()){
-            stateValidInput.value?.put(StateValid.personError,"")
+            map[StateValid.personError] = ""
         }else{
-            stateValidInput.value?.remove(StateValid.personError)
-            stateValidInput.value?.put(StateValid.personSuccess,"")
+            map.remove(StateValid.personError)
+            map[StateValid.personSuccess] = ""
         }
+        stateValidInput.value = map
         stateValidInput.value?.apply {
             if(containsKey(StateValid.numberError) || containsKey(StateValid.moneyError) || containsKey(StateValid.personError)) return
         }
