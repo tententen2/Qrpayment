@@ -3,6 +3,7 @@ apply from: '../config-android.gradle'
 
 dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.google.zxing:core:3.3.0'
     kotlin()
     dagger()
     networking()
