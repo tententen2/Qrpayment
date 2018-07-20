@@ -62,6 +62,9 @@ ext {
         implementation deps.ac.extensions
         implementation deps.ac.streams
         implementation deps.ac.paging
+        implementation deps.ac.room
+        kapt deps.ac.roomCompiler
+
         kapt deps.ac.compiler
     }
 

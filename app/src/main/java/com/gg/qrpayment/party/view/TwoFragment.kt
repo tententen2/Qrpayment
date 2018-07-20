@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Build
 import android.support.design.widget.TextInputLayout
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import com.gg.qrpayment.R
 import com.gg.qrpayment.base.BaseFragment
+import com.gg.qrpayment.local.AppDatabase
 import com.gg.qrpayment.model.PartyShare
 import com.gg.qrpayment.party.viewmodel.StateValid
 import com.gg.qrpayment.party.viewmodel.TwoViewModel
@@ -34,7 +36,12 @@ class TwoFragment : BaseFragment() {
     }
 
     private fun setUpViewModel() {
-        viewModel = ViewModelProviders.of(activity!!).get(TwoViewModel::class.java)
+        val mdb = AppDatabase.getInMemoryDatabase(context!!)
+        var factory: TwoViewModel.TwoViewModelFactory? = null
+        mdb?.let {
+            factory = TwoViewModel.TwoViewModelFactory(it)
+        }
+        viewModel = ViewModelProviders.of(activity!!, factory).get(TwoViewModel::class.java)
         viewModel.getState().observe(this, Observer {
             it?.let {
                 it.keys.apply {
@@ -62,6 +69,10 @@ class TwoFragment : BaseFragment() {
             vh_input.input_name.setText(it?.accountNumber)
             vh_input.input_amount.setText(it?.money)
             input_sum.setText(it?.sumPerson)
+        })
+
+        viewModel.loadAllHistory().observe(this, Observer {
+            Log.d("dfdfdfdfd", it.toString())
         })
 
     }

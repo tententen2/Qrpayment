@@ -3,16 +3,19 @@ package com.gg.qrpayment.party.viewmodel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.ViewModelProvider
+import com.gg.qrpayment.local.AppDatabase
+import com.gg.qrpayment.model.HistoryPayment
 import com.gg.qrpayment.model.PartyShare
 import com.gg.qrpayment.util.PromptPayCodeGenerator
 
-class TwoViewModel : ViewModel() {
+class TwoViewModel(val mDb: AppDatabase) : ViewModel() {
 
     private var stateValidInput = MutableLiveData<MutableMap<StateValid, String>>()
     private var codeGenerate = MutableLiveData<String>()
     private var pricePerPerson = MutableLiveData<Double>()
     private var map: MutableMap<StateValid, String> = mutableMapOf()
-    private var dataPartyShare= MutableLiveData<PartyShare>()
+    private var dataPartyShare = MutableLiveData<PartyShare>()
 
     fun validInput(data: PartyShare) {
         if (!data.validAccountNumber()) {
@@ -41,6 +44,7 @@ class TwoViewModel : ViewModel() {
             if (containsKey(StateValid.numberError) || containsKey(StateValid.moneyError) || containsKey(StateValid.personError)) return
         }
         generateCode(data)
+        insetHistory(data)
     }
 
     fun generateCode(data: PartyShare) {
@@ -56,9 +60,24 @@ class TwoViewModel : ViewModel() {
 
     fun getPricePerPerson(): LiveData<Double> = pricePerPerson
 
-    fun getPartyShare():LiveData<PartyShare> = dataPartyShare
+    fun getPartyShare(): LiveData<PartyShare> = dataPartyShare
 
-    fun setPartyPartyShare(data: PartyShare){
+    fun setPartyPartyShare(data: PartyShare) {
         dataPartyShare.value = data
+    }
+
+    fun insetHistory(data: PartyShare) {
+        mDb.let {
+            val historyPayment = HistoryPayment("rerer", "222", data.money.toDouble(), data.accountNumber)
+            it.historyPaymentDao().insertHistoryPayment(historyPayment)
+        }
+    }
+
+    fun loadAllHistory(): LiveData<List<HistoryPayment>> = mDb.historyPaymentDao().loadAllPayment()
+
+    class TwoViewModelFactory(val appDatabase: AppDatabase) : ViewModelProvider.NewInstanceFactory() {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return TwoViewModel(mDb = appDatabase) as T
+        }
     }
 }
