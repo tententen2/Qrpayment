@@ -1,6 +1,7 @@
 package com.gg.qrpayment.main.view
 
 import android.os.Bundle
+import android.util.Log
 import com.gg.qrpayment.R
 import com.gg.qrpayment.base.BaseActivity
 import com.gg.qrpayment.extension.startNewFragment
@@ -10,6 +11,6 @@ class MainActivity(override val layoutResourceId: Int = R.layout.activity_main) 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        startNewFragment(R.id.container_main,MainFragment())
+        startNewFragment(R.id.container_main, MainFragment())
     }
 }

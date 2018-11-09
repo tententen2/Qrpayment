@@ -38,7 +38,7 @@ class TwoFragment : BaseFragment() {
     private fun setUpViewModel() {
         val mdb = AppDatabase.getInMemoryDatabase(context!!)
         var factory: TwoViewModel.TwoViewModelFactory? = null
-        mdb?.let {
+        mdb.let {
             factory = TwoViewModel.TwoViewModelFactory(it)
         }
         viewModel = ViewModelProviders.of(activity!!, factory).get(TwoViewModel::class.java)
@@ -72,7 +72,11 @@ class TwoFragment : BaseFragment() {
         })
 
         viewModel.loadAllHistory().observe(this, Observer {
-            Log.d("dfdfdfdfd", it.toString())
+            Log.d("dfdfdfdfd", "Normal: "+it.toString())
+        })
+
+        viewModel.loadAllHistoryWithId().observe(this, Observer {
+            Log.d("dfdfdfdfd", "With ID: "+it.toString())
         })
 
     }

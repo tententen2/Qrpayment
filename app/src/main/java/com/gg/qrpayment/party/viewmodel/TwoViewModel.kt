@@ -1,12 +1,11 @@
 package com.gg.qrpayment.party.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.*
 import com.gg.qrpayment.local.AppDatabase
 import com.gg.qrpayment.model.HistoryPayment
 import com.gg.qrpayment.model.PartyShare
+import com.gg.qrpayment.model.TestObject
+import com.gg.qrpayment.model.TestObjectInner
 import com.gg.qrpayment.util.PromptPayCodeGenerator
 
 class TwoViewModel(val mDb: AppDatabase) : ViewModel() {
@@ -68,12 +67,15 @@ class TwoViewModel(val mDb: AppDatabase) : ViewModel() {
 
     fun insetHistory(data: PartyShare) {
         mDb.let {
-            val historyPayment = HistoryPayment("rerer", "222", data.money.toDouble(), data.accountNumber)
+            val historyPayment = HistoryPayment("rerer", "222", data.money.toDouble(), data.accountNumber, data.sumPerson.toInt(), TestObject("Test", 1,TestObjectInner("VVV")))
             it.historyPaymentDao().insertHistoryPayment(historyPayment)
         }
     }
 
+    fun loadAllHistoryWithId(): LiveData<List<TestObjectInner>> = mDb.historyPaymentDao().loadAllPaymentWithId()
+
     fun loadAllHistory(): LiveData<List<HistoryPayment>> = mDb.historyPaymentDao().loadAllPayment()
+
 
     class TwoViewModelFactory(val appDatabase: AppDatabase) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
